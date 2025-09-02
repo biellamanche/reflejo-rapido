@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Reflejo Rápido – Evaluación</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="wrap">
+    <!-- Pantalla inicial -->
+    <section id="pantalla-inicio" class="card fade-in">
+      <h1>Reflejo Rápido</h1>
+      <p class="sub">
+        Haz clic <strong>solo</strong> cuando aparezca <strong>una vocal</strong> (A, E, I, O, U).
+        Cada ronda dura <strong>500&nbsp;ms</strong> y hay <strong>20 rondas</strong>.
+      </p>
+      <button id="btn-comenzar" class="btn btn-primary">Comenzar</button>
+    </section>
+
+    <!-- Pantalla del juego -->
+    <section id="pantalla-juego" class="card hidden">
+      <div class="topbar">
+        <div id="indicador-ronda" class="pill">Ronda 1/20</div>
+        <div class="pill">Regla: clicar solo en <strong>vocales</strong></div>
+        <div id="cronometro" class="pill">0.5 s</div>
+      </div>
+
+      <div id="zona-clic" class="zona-clic" aria-label="Zona de clic">
+        <div id="letra" class="letra">A</div>
+        <div id="barra-tiempo" class="barra-tiempo">
+          <div id="barra-progreso" class="barra-progreso"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pantalla de resultados -->
+    <section id="pantalla-resultados" class="card hidden">
+      <h2>Resultados</h2>
+      <div class="tabla-wrap">
+        <table class="tabla" id="tabla">
+          <thead>
+            <tr>
+              <th>Ronda</th>
+              <th>Letra</th>
+              <th>Correcto</th>
+              <th>Tiempo (ms)</th>
+            </tr>
+          </thead>
+          <tbody id="cuerpo-tabla"></tbody>
+        </table>
+      </div>
+      <button id="btn-reiniciar" class="btn">Volver al inicio</button>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
