@@ -18,6 +18,7 @@ const cronometro = document.getElementById("cronometro");
 const zonaClic = document.getElementById("zona-clic");
 const letraEl = document.getElementById("letra");
 const barraProgreso = document.getElementById("barra-progreso");
+const emojiFeedback = document.getElementById("emoji-feedback");
 
 const cuerpoTabla = document.getElementById("cuerpo-tabla");
 
@@ -110,7 +111,7 @@ function onClick(){
   const tiempo = performance.now() - inicioRonda;
   clearTimeout(timeoutRonda);
 
-  const correcto = esVocal(letraActual); // clic en vocal = correcto, en consonante = error
+  const correcto = esVocal(letraActual);
 
   resultados.push({
     ronda,
@@ -119,13 +120,14 @@ function onClick(){
     tiempo: correcto ? tiempo.toFixed(2) : "Sin respuesta"
   });
 
+  mostrarEmoji(correcto);
   flashResultado(correcto);
   avanzarTrasBrevePausa();
 }
 
 // --- Sin clic en la ronda ---
 function registrarSinClic(){
-  const correcto = !esVocal(letraActual); // no clic y consonante = correcto, no clic y vocal = error
+  const correcto = !esVocal(letraActual);
   resultados.push({
     ronda,
     letra: letraActual,
@@ -133,8 +135,20 @@ function registrarSinClic(){
     tiempo: "Sin respuesta"
   });
 
+  mostrarEmoji(correcto);
   flashResultado(correcto);
   avanzarTrasBrevePausa();
+}
+
+// --- Mostrar emoji ---
+function mostrarEmoji(correcto){
+  emojiFeedback.textContent = correcto ? "✅" : "❌";
+  emojiFeedback.classList.add("show");
+  emojiFeedback.classList.remove("hidden");
+  setTimeout(() => {
+    emojiFeedback.classList.remove("show");
+    emojiFeedback.classList.add("hidden");
+  }, 1000);
 }
 
 // --- Feedback visual ---
@@ -147,7 +161,7 @@ function flashResultado(correcto){
 function avanzarTrasBrevePausa(){
   setTimeout(() => {
     siguienteRonda();
-  }, 180);
+  }, 1000); // ahora espera 1s para mostrar el emoji
 }
 
 // --- Finalización ---
@@ -166,7 +180,6 @@ function finalizar(){
     </tr>
   `).join("");
 
-  // --- Media de tiempos (solo respuestas correctas con tiempo válido) ---
   const tiemposValidos = resultados
     .filter(r => r.tiempo !== "Sin respuesta" && r.correcto)
     .map(r => parseFloat(r.tiempo))
